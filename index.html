@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhamad Iqbal Yahya — Full-Stack Developer & Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0b0f19',
+                        cardBg: '#111827',
+                        neonCyan: '#06b6d4',
+                        neonBlue: '#3b82f6',
+                        neonPurple: '#8b5cf6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Styles for Glowing Neon Effects -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .glow-box {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.15);
+            transition: all 0.3s ease;
+        }
+        .glow-box:hover {
+            box-shadow: 0 0 35px rgba(6, 182, 212, 0.3);
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-slate-100 antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- Notification Toast / Modal Box (No native alert) -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-slate-900 border border-cyan-500 text-slate-200 px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-cyan-400 text-xl"></i>
+        <span id="toast-message" class="font-medium text-sm">Pesan terkirim!</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-darkBg/80 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="text-xl font-extrabold tracking-tight flex items-center space-x-2">
+                <span class="bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">Iqbal Yahya</span>
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-cyan-400 transition">Tentang</a>
+                <a href="#experience" class="hover:text-cyan-400 transition">Pengalaman</a>
+                <a href="#skills" class="hover:text-cyan-400 transition">Keahlian</a>
+                <a href="#projects" class="hover:text-cyan-400 transition">Proyek & Game</a>
+                <a href="#education" class="hover:text-cyan-400 transition">Pendidikan</a>
+                <a href="#contact" class="hover:text-cyan-400 transition">Kontak</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="#contact" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 transition duration-200">
+                    Hubungi Saya
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-slate-300 hover:text-cyan-400 focus:outline-none text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-6 py-6 space-y-4 shadow-xl">
+            <a href="#about" class="block text-slate-300 hover:text-cyan-400 font-medium mobile-link">Tentang</a>
+            <a href="#experience" class="block text-slate-300 hover:text-cyan-400 font-medium mobile-link">Pengalaman</a>
+            <a href="#skills" class="block text-slate-300 hover:text-cyan-400 font-medium mobile-link">Keahlian</a>
+            <a href="#projects" class="block text-slate-300 hover:text-cyan-400 font-medium mobile-link">Proyek & Game</a>
+            <a href="#education" class="block text-slate-300 hover:text-cyan-400 font-medium mobile-link">Pendidikan</a>
+            <a href="#contact" class="block text-slate-300 hover:text-cyan-400 font-medium mobile-link">Kontak</a>
+            <div class="pt-2">
+                <a href="#contact" class="w-full text-center block py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm shadow-lg">
+                    Hubungi Saya
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-4 overflow-hidden">
+        <!-- Background Glowing Orbs -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-slate-800/80 border border-slate-700/80 text-cyan-400 text-xs sm:text-sm font-semibold mb-6 shadow-inner">
+                <i class="fa-solid fa-code text-cyan-400"></i>
+                <span>Full-Stack Web & Application Developer</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                Halo, Saya <br class="sm:hidden">
+                <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 text-transparent bg-clip-text text-glow">
+                    Muhamad Iqbal Yahya
+                </span>
+            </h1>
+
+            <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                Mahasiswa tingkat akhir Sistem Informasi dengan keahlian kuat dalam pengembangan web full-stack, sistem offline, dan aplikasi kustom.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-base shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 transition duration-200 text-center">
+                    <i class="fa-solid fa-rocket mr-2"></i> Lihat Proyek Unggulan
+                </a>
+                <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 font-bold text-base border border-slate-700 hover:border-cyan-500/50 transition duration-200 text-center">
+                    <i class="fa-solid fa-envelope mr-2"></i> Hubungi Saya
+                </a>
+            </div>
+
+            <!-- Social Links Bar -->
+            <div class="flex items-center justify-center space-x-6 mt-12 text-slate-400 text-xl">
+                <a href="mailto:iqbalyahya2005@gmail.com" class="hover:text-cyan-400 transition p-2 bg-slate-900 border border-slate-800 rounded-full hover:border-cyan-500/50" title="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="https://wa.me/6281380513356" target="_blank" class="hover:text-cyan-400 transition p-2 bg-slate-900 border border-slate-800 rounded-full hover:border-cyan-500/50" title="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="https://instagram.com/iqbalyahyaaa_" target="_blank" class="hover:text-cyan-400 transition p-2 bg-slate-900 border border-slate-800 rounded-full hover:border-cyan-500/50" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Tentang <span class="text-cyan-400">Saya</span></h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Mengenal lebih dekat latar belakang profesional dan passion saya di dunia teknologi.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            <div class="lg:col-span-1 bg-slate-900/60 border border-slate-800 p-8 rounded-2xl glow-box relative overflow-hidden group">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition"></div>
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white text-3xl font-bold mb-6 shadow-lg shadow-cyan-500/30">
+                    MIY
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-slate-100">Muhamad Iqbal Yahya</h3>
+                <p class="text-cyan-400 text-sm font-semibold mb-4">Mahasiswa Sistem Informasi & Full-Stack Developer</p>
+                <div class="space-y-3 text-sm text-slate-400 border-t border-slate-800 pt-4">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-location-dot text-cyan-400"></i>
+                        <span>Kubu Raya, Kalimantan Barat</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-envelope text-cyan-400"></i>
+                        <span>iqbalyahya2005@gmail.com</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-phone text-cyan-400"></i>
+                        <span>+62 813 8051 3356</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 bg-slate-900/60 border border-slate-800 p-8 sm:p-10 rounded-2xl glow-box space-y-6">
+                <h3 class="text-2xl font-bold text-slate-100 flex items-center space-x-3">
+                    <span class="w-3 h-3 bg-cyan-400 rounded-full"></span>
+                    <span>Ringkasan Profil Profesional</span>
+                </h3>
+                <p class="text-slate-300 leading-relaxed text-base sm:text-lg">
+                    Mahasiswa tingkat akhir Sistem Informasi dengan keahlian kuat dalam pengembangan web dan aplikasi full-stack menggunakan <strong class="text-cyan-400">Laravel, PHP, JavaScript, React, Node.Js dan Flutter</strong>.
+                </p>
+                <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+                    Berpengalaman merancang dan mendeploy Sistem Informasi Desa secara offline serta membangun berbagai proyek aplikasi kustom yang fungsional. Terbiasa memecahkan masalah kompleks, memiliki pemahaman UI/UX yang baik, dan siap memberikan kontribusi nyata dalam tim engineering yang dinamis.
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800 text-center">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div class="text-2xl font-bold text-cyan-400">4+</div>
+                        <div class="text-xs text-slate-400 mt-1">Proyek Utama</div>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div class="text-2xl font-bold text-blue-400">60 FPS</div>
+                        <div class="text-xs text-slate-400 mt-1">Game Performance</div>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 col-span-2 sm:col-span-1">
+                        <div class="text-2xl font-bold text-purple-400">90%+</div>
+                        <div class="text-xs text-slate-400 mt-1">Efisiensi Sistem Desa</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section id="experience" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Pengalaman <span class="text-cyan-400">Kerja</span></h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Rekam jejak profesional dalam pengembangan sistem, analisis data, dan operasional.</p>
+        </div>
+
+        <div class="relative border-l-2 border-slate-800 ml-4 sm:ml-32 space-y-12">
+            
+            <!-- Experience 1 -->
+            <div class="relative pl-8 sm:pl-10 group">
+                <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-cyan-400 ring-4 ring-slate-950 group-hover:scale-125 transition"></div>
+                <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl glow-box">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-100">Full-Stack Web Developer (Sistem Informasi Desa)</h3>
+                            <p class="text-cyan-400 font-medium text-sm">Desa Sungai Pangkalan 1</p>
+                        </div>
+                        <span class="mt-2 sm:mt-0 inline-block px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-semibold border border-cyan-500/20 w-max">
+                            Juli 2026 - September 2026
+                        </span>
+                    </div>
+                    <ul class="space-y-2 text-slate-300 text-sm sm:text-base">
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-cyan-400 mt-1 text-xs"></i>
+                            <span>Merancang dan mengimplementasikan aplikasi web Sistem Informasi Desa (SID) berbasis Laravel dan MySQL untuk modernisasi pelayanan administrasi desa.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-cyan-400 mt-1 text-xs"></i>
+                            <span>Meningkatkan efisiensi tata kelola data publik dan pemrosesan dokumen warga hingga 90%+ lebih cepat dibandingkan metode manual.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-cyan-400 mt-1 text-xs"></i>
+                            <span>Memastikan sistem berjalan stabil dengan skema offline-first hosting sesuai kebutuhan infrastruktur daerah lokal.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Experience 2 -->
+            <div class="relative pl-8 sm:pl-10 group">
+                <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-slate-950 group-hover:scale-125 transition"></div>
+                <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl glow-box">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-100">Data Analyst & Web Developer (Capstone Project)</h3>
+                            <p class="text-blue-400 font-medium text-sm">Informatics Summit Bootcamp – UNTAN</p>
+                        </div>
+                        <span class="mt-2 sm:mt-0 inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-semibold border border-blue-500/20 w-max">
+                            September 2026 - Oktober 2026
+                        </span>
+                    </div>
+                    <ul class="space-y-2 text-slate-300 text-sm sm:text-base">
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-blue-400 mt-1 text-xs"></i>
+                            <span>Mengembangkan platform data "Arah-Kuliah" untuk membantu calon mahasiswa menganalisis dan menentukan pilihan program studi berdasarkan preferensi data.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-blue-400 mt-1 text-xs"></i>
+                            <span>Memproses, membersihkan, dan menganalisis dataset pendidikan untuk menghasilkan rekomendasi jurusan dengan tingkat akurasi dan relevansi informasi yang tinggi.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-blue-400 mt-1 text-xs"></i>
+                            <span>Menyajikan visualisasi data intuitif dan antarmuka web yang responsif untuk meningkatkan kenyamanan pengguna.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Experience 3 -->
+            <div class="relative pl-8 sm:pl-10 group">
+                <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-purple-500 ring-4 ring-slate-950 group-hover:scale-125 transition"></div>
+                <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl glow-box">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-100">Game Developer & Designer</h3>
+                            <p class="text-purple-400 font-medium text-sm">BUDAYA GO! 2025 Competition</p>
+                        </div>
+                        <span class="mt-2 sm:mt-0 inline-block px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold border border-purple-500/20 w-max">
+                            November 2025
+                        </span>
+                    </div>
+                    <ul class="space-y-2 text-slate-300 text-sm sm:text-base">
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-purple-400 mt-1 text-xs"></i>
+                            <span>Mengembangkan game 2D side-scrolling action-adventure "Pangsuma: Hero from Borneo" menggunakan Construct 3.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-purple-400 mt-1 text-xs"></i>
+                            <span>Merancang mekanik permainan, hierarki animasi sprite, serta sistem fisika interaktif berbasis kearifan lokal Kalimantan Barat.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-purple-400 mt-1 text-xs"></i>
+                            <span>Berhasil mendeploy dan mendistribusikan game prototype melalui platform Firebase Hosting dan Android APK dengan kinerja stabil 60 FPS.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Experience 4 -->
+            <div class="relative pl-8 sm:pl-10 group">
+                <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-emerald-500 ring-4 ring-slate-950 group-hover:scale-125 transition"></div>
+                <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-2xl glow-box">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-100">Independent Logistics & Micro-Operations Partner</h3>
+                            <p class="text-emerald-400 font-medium text-sm">Grab Indonesia</p>
+                        </div>
+                        <span class="mt-2 sm:mt-0 inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20 w-max">
+                            Juni 2026 - Sekarang
+                        </span>
+                    </div>
+                    <ul class="space-y-2 text-slate-300 text-sm sm:text-base">
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-emerald-400 mt-1 text-xs"></i>
+                            <span>Mengelola operasional harian pengiriman barang (Grab Express) dan kuliner (GrabFood) secara mandiri dengan tingkat ketepatan waktu tinggi.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-chevron-right text-emerald-400 mt-1 text-xs"></i>
+                            <span>Menunjukkan manajemen waktu, ketahanan kerja (work ethic), dan problem solving yang baik di lapangan dalam mengejar target harian.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Keahlian <span class="text-cyan-400">Teknis</span></h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Bahasa pemrograman, framework, dan tools yang dikuasai untuk membangun aplikasi berkualitas.</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+            
+            <!-- Skill 1 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-brands fa-laravel"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">Laravel</h3>
+                <p class="text-xs text-slate-400 mt-1">Backend & Web Framework</p>
+            </div>
+
+            <!-- Skill 2 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-brands fa-php"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">PHP</h3>
+                <p class="text-xs text-slate-400 mt-1">Server-side Scripting</p>
+            </div>
+
+            <!-- Skill 3 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-brands fa-js"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">JavaScript</h3>
+                <p class="text-xs text-slate-400 mt-1">Frontend & Node Ecosystem</p>
+            </div>
+
+            <!-- Skill 4 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-brands fa-react"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">React</h3>
+                <p class="text-xs text-slate-400 mt-1">Modern UI Library</p>
+            </div>
+
+            <!-- Skill 5 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group" style="background:transparent; border:none; padding:0;"></div>
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-brands fa-node-js"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">Node.JS</h3>
+                <p class="text-xs text-slate-400 mt-1">Backend Runtime</p>
+            </div>
+
+            <!-- Skill 6 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-brands fa-html5"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">HTML + CSS</h3>
+                <p class="text-xs text-slate-400 mt-1">Markup & Styling</p>
+            </div>
+
+            <!-- Skill 7 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-solid fa-cube"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">Unity Hub</h3>
+                <p class="text-xs text-slate-400 mt-1">Game Engine</p>
+            </div>
+
+            <!-- Skill 8 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-brands fa-git-alt"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">Git</h3>
+                <p class="text-xs text-slate-400 mt-1">Version Control</p>
+            </div>
+
+            <!-- Skill 9 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">Construct</h3>
+                <p class="text-xs text-slate-400 mt-1">2D Game Development</p>
+            </div>
+
+            <!-- Skill 10 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center glow-box hover:-translate-y-1 transition group">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 text-3xl group-hover:scale-110 transition">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3 class="font-bold text-slate-200">AI Tools</h3>
+                <p class="text-xs text-slate-400 mt-1">Productivity & Dev Assistance</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Projects & Featured Links Section -->
+    <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Proyek & <span class="text-cyan-400">Live Demo</span></h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Kunjungi langsung hasil karya platform capstone project dan game interaktif yang telah dideploy.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Project 1: Arah Kuliah -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 glow-box flex flex-col justify-between group relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition"></div>
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="px-4 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 font-semibold text-xs border border-cyan-500/20">
+                            Capstone Project / Data Platform
+                        </span>
+                        <i class="fa-solid fa-graduation-cap text-cyan-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-100 mb-3 group-hover:text-cyan-400 transition">Arah-Kuliah</h3>
+                    <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+                        Platform data interaktif yang dikembangkan untuk membantu calon mahasiswa menganalisis dan menentukan pilihan program studi berdasarkan preferensi data pendidikan secara akurat.
+                    </p>
+                </div>
+                <div>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-slate-950 text-slate-300 text-xs rounded-md border border-slate-800">React / Web</span>
+                        <span class="px-3 py-1 bg-slate-950 text-slate-300 text-xs rounded-md border border-slate-800">Data Analytics</span>
+                        <span class="px-3 py-1 bg-slate-950 text-slate-300 text-xs rounded-md border border-slate-800">Vercel Deployment</span>
+                    </div>
+                    <a href="https://arah-kuliah.vercel.app/" target="_blank" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-sm shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 flex items-center justify-center space-x-2 transition duration-200">
+                        <span>Buka Live Demo</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 2: Pangsuma Game -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 glow-box flex flex-col justify-between group relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition"></div>
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="px-4 py-1.5 rounded-full bg-purple-500/10 text-purple-400 font-semibold text-xs border border-purple-500/20">
+                            Game Development / Budaya Go!
+                        </span>
+                        <i class="fa-solid fa-gamepad text-purple-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-100 mb-3 group-hover:text-purple-400 transition">Pangsuma: Hero from Borneo</h3>
+                    <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+                        Game 2D side-scrolling action-adventure yang mengangkat kearifan lokal Kalimantan Barat. Dibangun dengan Construct 3, menampilkan animasi sprite mulus dan kinerja stabil 60 FPS.
+                    </p>
+                </div>
+                <div>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-slate-950 text-slate-300 text-xs rounded-md border border-slate-800">Construct 3</span>
+                        <span class="px-3 py-1 bg-slate-950 text-slate-300 text-xs rounded-md border border-slate-800">2D Action</span>
+                        <span class="px-3 py-1 bg-slate-950 text-slate-300 text-xs rounded-md border border-slate-800">Firebase Hosting</span>
+                    </div>
+                    <a href="https://pangsuma-hero-from-borneo.web.app" target="_blank" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 flex items-center justify-center space-x-2 transition duration-200">
+                        <span>Mainkan Game</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Riwayat <span class="text-cyan-400">Pendidikan</span></h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Institusi akademik dan bootcamp intensif tempat saya menimba ilmu formal dan teknis.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Education 1 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-3xl glow-box">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-2xl font-bold">
+                        <i class="fa-solid fa-university"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-100">Universitas Nahdlatul Ulama' Kalimantan Barat</h3>
+                        <p class="text-cyan-400 text-sm font-medium">Kubu Raya</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between text-sm text-slate-400 border-t border-slate-800 pt-4">
+                    <span>Sistem Informasi</span>
+                    <span class="px-3 py-1 rounded-full bg-slate-950 border border-slate-800 text-cyan-400 font-semibold text-xs">September 2023 - Sekarang</span>
+                </div>
+            </div>
+
+            <!-- Education 2 -->
+            <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-3xl glow-box">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-2xl font-bold">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-100">Universitas Tanjung Pura</h3>
+                        <p class="text-blue-400 text-sm font-medium">Pontianak • Informatic Summit Bootcamp</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between text-sm text-slate-400 border-t border-slate-800 pt-4">
+                    <span>Front-End Odyssey</span>
+                    <span class="px-3 py-1 rounded-full bg-slate-950 border border-slate-800 text-blue-400 font-semibold text-xs">September 2026 - Agustus 2026</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Additional Information & Certifications -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 sm:p-12 glow-box">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-8 text-center">Informasi <span class="text-cyan-400">Tambahan</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-800">
+                    <div class="flex items-center space-x-3 mb-4 text-cyan-400 text-xl">
+                        <i class="fa-solid fa-certificate"></i>
+                        <h3 class="font-bold text-slate-100 text-base">Sertifikasi & Pelatihan</h3>
+                    </div>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i><span>Freecodecamp Certifications</span></li>
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i><span>Bootcamp & Intensive Training</span></li>
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i><span>Informatic Training for Unity Developer</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-800">
+                    <div class="flex items-center space-x-3 mb-4 text-blue-400 text-xl">
+                        <i class="fa-solid fa-language"></i>
+                        <h3 class="font-bold text-slate-100 text-base">Bahasa</h3>
+                    </div>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-circle text-blue-400 text-xs"></i><span>Bahasa Indonesia (Native)</span></li>
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-circle text-blue-400 text-xs"></i><span>English (Professional Working)</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-800">
+                    <div class="flex items-center space-x-3 mb-4 text-purple-400 text-xl">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <h3 class="font-bold text-slate-100 text-base">Ketersediaan</h3>
+                    </div>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-star text-purple-400 text-xs"></i><span>Open to Work / Full-time</span></li>
+                        <li class="flex items-center space-x-2"><i class="fa-solid fa-star text-purple-400 text-xs"></i><span>Freelance & Project Based</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Hubungi <span class="text-cyan-400">Saya</span></h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base">Tertarik berkolaborasi atau mendiskusikan proyek? Mari terhubung melalui kontak di bawah.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            
+            <!-- Contact Info Cards -->
+            <div class="bg-slate-900/60 border border-slate-800 p-8 sm:p-10 rounded-3xl glow-box flex flex-col justify-between space-y-6">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-100 mb-4">Mari Berdiskusi</h3>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
+                        Saya selalu terbuka untuk peluang kolaborasi baru, proyek web development, game design, maupun diskusi seputar teknologi.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <a href="mailto:iqbalyahya2005@gmail.com" class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-950 border border-slate-800 hover:border-cyan-500/50 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-xl group-hover:scale-110 transition">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">Email Utama</div>
+                                <div class="text-slate-100 font-semibold text-sm sm:text-base">iqbalyahya2005@gmail.com</div>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/6281380513356" target="_blank" class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-950 border border-slate-800 hover:border-cyan-500/50 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xl group-hover:scale-110 transition">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">WhatsApp / Telepon</div>
+                                <div class="text-slate-100 font-semibold text-sm sm:text-base">+62 813 8051 3356</div>
+                            </div>
+                        </a>
+
+                        <a href="https://instagram.com/iqbalyahyaaa_" target="_blank" class="flex items-center space-x-4 p-4 rounded-2xl bg-slate-950 border border-slate-800 hover:border-cyan-500/50 transition group">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 text-xl group-hover:scale-110 transition">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">Instagram</div>
+                                <div class="text-slate-100 font-semibold text-sm sm:text-base">@iqbalyahyaaa_</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-800 text-xs text-slate-500 text-center">
+                    Berbasis di Kubu Raya & Pontianak, Kalimantan Barat
+                </div>
+            </div>
+
+            <!-- Contact Form (Interactive with Toast - No alert) -->
+            <div class="bg-slate-900/60 border border-slate-800 p-8 sm:p-10 rounded-3xl glow-box flex flex-col justify-between">
+                <form id="contact-form" class="space-y-6">
+                    <h3 class="text-2xl font-bold text-slate-100 mb-2">Kirim Pesan Cepat</h3>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Nama Anda</label>
+                        <input type="text" id="sender-name" required placeholder="Masukkan nama..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-cyan-500 transition text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Email Anda</label>
+                        <input type="email" id="sender-email" required placeholder="nama@email.com..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-cyan-500 transition text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Pesan</label>
+                        <textarea id="sender-message" rows="4" required placeholder="Tuliskan pesan atau penawaran proyek..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 focus:outline-none focus:border-cyan-500 transition text-sm resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-sm shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition duration-200 flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Kirim Pesan Sekarang</span>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="text-center sm:text-left">
+                <span class="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">Muhamad Iqbal Yahya</span>
+                <p class="text-xs text-slate-500 mt-1">Full-Stack Developer & Systems Engineer © 2026</p>
+            </div>
+            <div class="flex items-center space-x-6 text-slate-400 text-lg">
+                <a href="mailto:iqbalyahya2005@gmail.com" class="hover:text-cyan-400 transition"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://wa.me/6281380513356" target="_blank" class="hover:text-cyan-400 transition"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://instagram.com/iqbalyahyaaa_" target="_blank" class="hover:text-cyan-400 transition"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu and Toast Notification (No alert) -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Contact Form Submission Handler with Custom Toast (Strictly no alert)
+        const contactForm = document.getElementById('contact-form');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('sender-name').value;
+            
+            // Show toast
+            toastMessage.textContent = `Terima kasih ${name}, pesan Anda berhasil dikirim!`;
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            // Reset form
+            contactForm.reset();
+
+            // Hide toast after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
